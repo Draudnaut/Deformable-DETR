@@ -12,6 +12,7 @@ import datasets.samplers as samplers
 from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
+import cv2
 
 def main(args):
     utils.init_distributed_mode(args)
@@ -39,6 +40,12 @@ def main(args):
     
     #PGD attack
     instance_pgd = torchattacks.PGD(model_without_ddp,eps=8/255,alpha=1/255,steps=10,random_start=True)
+    instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    print(instance_pgd) 
+    # TODO: label resolved need implementation.
+    images = cv2.imread("data/coco/train2017/000000000036.jpg")
+    atk_images = instance_pgd(images=images)
+    cv2.imshow(atk_images)
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser('Deformable DETR training and evaluation script', parents=[get_args_parser()])
