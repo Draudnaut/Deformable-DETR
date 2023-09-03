@@ -7,3 +7,4 @@ models/ops/MultiScaleDeformableAttention.egg-info/SOURCES.txt
 models/ops/MultiScaleDeformableAttention.egg-info/top_level.txt
 pretrained_model
 .vscode
+data
