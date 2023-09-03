@@ -1,0 +1,11 @@
+build
+models/ops/dist
+__pycache__
+models/ops/MultiScaleDeformableAttention.egg-info/dependency_links.txt
+models/ops/MultiScaleDeformableAttention.egg-info/PKG-INFO
+models/ops/MultiScaleDeformableAttention.egg-info/SOURCES.txt
+models/ops/MultiScaleDeformableAttention.egg-info/top_level.txt
+pretrained_model
+.vscode
+data
+exps
