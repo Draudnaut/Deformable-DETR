@@ -1,4 +1,5 @@
 import argparse
+import numpy as np
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Deformable DETR Detector', add_help=False)
