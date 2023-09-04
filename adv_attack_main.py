@@ -43,8 +43,9 @@ def main(args):
     instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     print(instance_pgd) 
     # TODO: label resolved need implementation.
-    images = cv2.imread("data/coco/train2017/000000000036.jpg")
-    atk_images = instance_pgd(images=images)
+    image = cv2.imread("data/coco/train2017/000000000036.jpg")
+    image = torch.asarray(image)
+    atk_images = instance_pgd(images=image.flatten(1),labels=None) # label translation
     cv2.imshow(atk_images)
 
 if __name__=="__main__":
