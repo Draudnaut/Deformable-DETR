@@ -15,6 +15,7 @@ from models import build_model
 import cv2
 from datasets.torchvision_datasets import CocoDetection
 
+@torch.no_grad()
 def main(args):
     utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
@@ -48,8 +49,10 @@ def main(args):
     instance_pgd = torchattacks.PGD(model_without_ddp,eps=8/255,alpha=1/255,steps=10,random_start=True)
     instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     print(instance_pgd) 
-    # TODO: label resolved need implementation.
-    picked_image, picked_label = dataset_train[1]
+    picked_image, picked_label = dataset_train[3]
+    # print(type(picked_image),type(picked_label))
+    adv_images = instance_pgd(torch.Tensor(picked_image),picked_label['labels'])
+    pass
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser('Deformable DETR training and evaluation script', parents=[get_args_parser()])
