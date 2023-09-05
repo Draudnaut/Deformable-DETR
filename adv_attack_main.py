@@ -13,6 +13,7 @@ from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
 import cv2
+from datasets.torchvision_datasets import CocoDetection
 
 def main(args):
     utils.init_distributed_mode(args)
@@ -35,6 +36,11 @@ def main(args):
     model.to(device)
     model_without_ddp = model
     checkpoint = torch.load(args.resume, map_location='cpu')
+
+    #load the dataset
+    dataset_train:CocoDetection = build_dataset(image_set='train', args=args)
+    dataset_val:CocoDetection = build_dataset(image_set='val', args=args)
+    
     # load the pretrained value
     missing_keys, unexpected_keys = model_without_ddp.load_state_dict(checkpoint['model'], strict=False)
     
@@ -43,10 +49,7 @@ def main(args):
     instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     print(instance_pgd) 
     # TODO: label resolved need implementation.
-    image = cv2.imread("data/coco/train2017/000000000036.jpg")
-    image = torch.asarray(image)
-    atk_images = instance_pgd(images=image.flatten(1),labels=None) # label translation
-    cv2.imshow(atk_images)
+    picked_image, picked_label = dataset_train[1]
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser('Deformable DETR training and evaluation script', parents=[get_args_parser()])
