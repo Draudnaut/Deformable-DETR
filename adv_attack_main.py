@@ -51,8 +51,8 @@ def main(args):
     print(instance_pgd) 
     picked_image, picked_label = dataset_train[3]
     # print(type(picked_image),type(picked_label))
-    adv_images = instance_pgd(torch.Tensor(picked_image),picked_label['labels'])
-    pass
+    adv_images = instance_pgd(picked_image,picked_label['labels'])
+    cv2.imshow(adv_images)
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser('Deformable DETR training and evaluation script', parents=[get_args_parser()])
