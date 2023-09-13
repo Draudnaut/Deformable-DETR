@@ -440,6 +440,9 @@ class MLP(nn.Module):
             x = F.relu(layer(x)) if i < self.num_layers - 1 else layer(x)
         return x
 
+class PostProcessADV(nn.Module):
+    #TODO: need implementation
+    pass
 
 def build(args):
     num_classes = 20 if args.dataset_file != 'coco' else 91
@@ -526,7 +529,7 @@ def build_adv_model(args):
             aux_weight_dict.update({k + f'_{i}': v for k, v in weight_dict.items()})
         aux_weight_dict.update({k + f'_enc': v for k, v in weight_dict.items()})
         weight_dict.update(aux_weight_dict)
-    # TODO: PostProcess needs modification
+    # TODO: PostProcess for adv needs modification
     losses = ['labels', 'boxes', 'cardinality']
     if args.masks:
         losses += ["masks"]
@@ -541,4 +544,3 @@ def build_adv_model(args):
             postprocessors["panoptic"] = PostProcessPanoptic(is_thing_map, threshold=0.85)
 
     return model, criterion, postprocessors
-    pass
