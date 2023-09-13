@@ -7,9 +7,11 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 # ------------------------------------------------------------------------
 
-from .deformable_detr import build
+from .deformable_detr import build, build_adv_model
 
 
 def build_model(args):
     return build(args)
 
+def build_model_adv(args):
+    return build_adv_model(args)

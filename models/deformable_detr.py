@@ -490,3 +490,7 @@ def build(args):
             postprocessors["panoptic"] = PostProcessPanoptic(is_thing_map, threshold=0.85)
 
     return model, criterion, postprocessors
+
+def build_adv_model(args):
+    # TODO: implement this adv model
+    pass

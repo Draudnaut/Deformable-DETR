@@ -50,9 +50,9 @@ def main(args):
     instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     print(instance_pgd) 
     picked_image, picked_label = dataset_train[3]
-    # print(type(picked_image),type(picked_label))
     adv_images = instance_pgd(picked_image,picked_label['labels'])
-    cv2.imshow(adv_images)
+
+
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser('Deformable DETR training and evaluation script', parents=[get_args_parser()])
