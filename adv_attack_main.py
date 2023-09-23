@@ -14,7 +14,7 @@ from engine import evaluate, train_one_epoch
 from models import build_model
 import cv2
 from datasets.torchvision_datasets import CocoDetection
-
+from torchattacks import attack
 @torch.no_grad()
 def main(args):
     utils.init_distributed_mode(args)
@@ -50,8 +50,10 @@ def main(args):
     instance_pgd.set_normalization_used(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     print(instance_pgd) 
     picked_image, picked_label = dataset_train[3]
-    adv_images = instance_pgd(picked_image,picked_label['labels'])
-
+    picked_image = torch.cat([picked_image])
+    picked_labels = torch.cat([picked_label["labels"]])
+    adv_images = instance_pgd(picked_image,picked_labels)
+    
 
 
 if __name__=="__main__":
