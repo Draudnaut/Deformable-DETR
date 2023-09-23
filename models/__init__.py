@@ -13,5 +13,5 @@ from .deformable_detr import build, build_adv_model
 def build_model(args):
     return build(args)
 
-def build_model_adv(args):
+def build_adv_model(args):
     return build_adv_model(args)
